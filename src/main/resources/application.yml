@@ -1,0 +1,7 @@
+spring:
+  graphql:
+    graphiql:
+      enabled: true
+
+server:
+  port: 9080
