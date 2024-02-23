@@ -19,5 +19,10 @@ type Query {
 }
 
 type Mutation {
-    updateBook(id: ID!, title: String): Book
+    updateBook(id: ID!, bookInput: BookInput): Book
+}
+
+input BookInput {
+    title: String
+    pages: Int
 }

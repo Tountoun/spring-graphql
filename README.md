@@ -22,7 +22,7 @@ The api exposes data about books and authors.
     mvn spring-boot:run
 ````
 ## Features
-### Note: The schema of the response is specified by the client
+### Note: The schema of the response is specified by the client. This avoids over-fetching and under-fetching.
 - Get list of books
 
 ![](screencasts/books-request.png)
@@ -34,6 +34,10 @@ The api exposes data about books and authors.
 - Search a book by its attribute; it is **or** search. The search keys are _title_, _pages_, _authorName_ and _nationality_.
 
 ![](screencasts/search-request.png)
+
+- Update a book.
+
+![](screencasts/update-book-request.png)
 
 ## Documentation
 Here is the official documentation of spring for graphql -> [check it](https://spring.io/guides/gs/graphql-server)

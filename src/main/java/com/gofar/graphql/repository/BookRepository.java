@@ -1,7 +1,11 @@
 package com.gofar.graphql.repository;
 
+import com.gofar.graphql.exception.BookException;
 import com.gofar.graphql.model.Author;
 import com.gofar.graphql.model.Book;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.graphql.execution.ErrorType;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -10,7 +14,7 @@ import java.util.stream.Collectors;
 @Component
 public class BookRepository {
 
-    private static List<Book> books = new ArrayList<>();
+    private final static List<Book> books = new ArrayList<>();
 
     static {
         Author yvan = new Author(5, "Yvan", "Togolese", 56);
@@ -32,13 +36,31 @@ public class BookRepository {
             if (book.getId() == id)
                 return book;
         }
-        return null;
+        throw new BookException(String.format("Book with id %s does not exists", id), ErrorType.NOT_FOUND);
     }
 
-    public Book updateBook(int id, String title) {
-        Book book = this.getBookById(id);
-        if (Objects.nonNull(book))
-            book.setTitle(title);
+    public Book updateBook(int id, Book book) throws Exception {
+        Book existing = this.getBookById(id);
+        String oldTitle = existing.getTitle();
+        int oldPages = existing.getPages();
+        if (Objects.nonNull(book)) {
+            if (StringUtils.isNotEmpty(book.getTitle()) && !StringUtils.equals(book.getTitle(), oldTitle)) {
+                existing.setTitle(book.getTitle());
+            }
+            if (book.getPages() != 0 && book.getPages() != oldPages) {
+                existing.setPages(book.getPages());
+            }
+            return existing;
+        }
+        throw new BookException(String.format("Book with id %s does not exists", id), ErrorType.NOT_FOUND);
+    }
+
+    public Book addBook(Book book) throws Exception {
+        if (this.findByTitle(book.getTitle()).isPresent()) {
+            throw new Exception(String.format("Book with title %s already exists", book.getTitle()));
+        }
+        book.setId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
+        books.add(book);
         return book;
     }
 
