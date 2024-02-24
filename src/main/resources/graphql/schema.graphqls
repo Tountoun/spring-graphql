@@ -12,6 +12,15 @@ type Author {
     age: Int
 }
 
+type Response {
+    message: String
+    data: Object
+}
+
+type BookList {
+    books: [Book]
+}
+
 type Query {
     books: [Book]
     getBookById(id: ID!): Book
@@ -20,9 +29,12 @@ type Query {
 
 type Mutation {
     updateBook(id: ID!, bookInput: BookInput): Book
+    deleteBookById(id: ID!): Response
 }
 
 input BookInput {
     title: String
     pages: Int
 }
+
+union Object = Book | BookList

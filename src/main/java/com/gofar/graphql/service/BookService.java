@@ -16,6 +16,8 @@ import java.util.Optional;
 public class BookService {
 
     private BookRepository bookRepository;
+    private final static String BOOK_NOT_FOUND = "Book with id %s not found";
+    private final static String BOOK_ALREADY_EXISTS = "Book with id %s does not exists";
 
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
@@ -23,7 +25,7 @@ public class BookService {
 
     public Book getBookById(Long id) {
         Optional<Book> book = bookRepository.findById(id);
-        return book.orElseThrow(() -> new BookException(String.format("Book with id %s not found", id), ErrorType.NOT_FOUND));
+        return book.orElseThrow(() -> new BookException(String.format(BOOK_NOT_FOUND, id), ErrorType.NOT_FOUND));
     }
 
     public Book updateBook(Long id, Book book) {
@@ -39,7 +41,15 @@ public class BookService {
             }
             return bookRepository.saveAndFlush(existing);
         }
-        throw new BookException(String.format("Book with id %s does not exists", id), ErrorType.NOT_FOUND);
+        throw new BookException(String.format(BOOK_ALREADY_EXISTS, id), ErrorType.BAD_REQUEST);
+    }
+
+    public String deleteById(long id) {
+        if (bookRepository.existsById(id)) {
+            bookRepository.deleteById(id);
+            return String.format("Book with id %s deleted successfully", id);
+        }
+        throw new BookException(String.format(BOOK_NOT_FOUND, id), ErrorType.NOT_FOUND);
     }
 
     public List<Book> search(String title, int pages, String authorName, String nationality) {

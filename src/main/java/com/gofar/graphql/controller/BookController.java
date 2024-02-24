@@ -3,6 +3,7 @@ package com.gofar.graphql.controller;
 import com.gofar.graphql.exception.BookException;
 import com.gofar.graphql.model.Book;
 import com.gofar.graphql.model.BookInput;
+import com.gofar.graphql.model.Response;
 import com.gofar.graphql.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.ArgumentValue;
@@ -42,6 +43,12 @@ public class BookController {
     @MutationMapping(name = "updateBook")
     public Book update(@Argument int id, @Argument BookInput bookInput) throws Exception {
         return bookService.updateBook((long) id, bookInput.toBook());
+    }
+
+    @MutationMapping(name = "deleteBookById")
+    public Response delete(@Argument int id) {
+        String message = bookService.deleteById((long)id);
+        return new Response(message, null);
     }
 
     @Autowired
