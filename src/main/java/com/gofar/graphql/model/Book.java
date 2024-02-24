@@ -1,26 +1,39 @@
 package com.gofar.graphql.model;
 
-public class Book {
+import jakarta.persistence.*;
 
-    private int id;
+@Entity
+@Table(name = "book")
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String title;
     private int pages;
+    @ManyToOne
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
     private Author author;
 
     public Book() {}
 
-    public Book(int id, String title, int pages, Author author) {
+    public Book(Long id, String title, int pages, Author author) {
         this.id = id;
         this.title = title;
         this.pages = pages;
         this.author = author;
     }
 
-    public int getId() {
+    public Book(String title, int pages, Author author) {
+        this.title = title;
+        this.pages = pages;
+        this.author = author;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
