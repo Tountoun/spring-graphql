@@ -48,7 +48,7 @@ public class BookController {
     @MutationMapping(name = "deleteBookById")
     public Response delete(@Argument int id) {
         String message = bookService.deleteById((long)id);
-        return new Response(message, null);
+        return new Response(message);
     }
 
     @Autowired

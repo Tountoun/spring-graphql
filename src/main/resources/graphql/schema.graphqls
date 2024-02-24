@@ -14,7 +14,6 @@ type Author {
 
 type Response {
     message: String
-    data: Object
 }
 
 type BookList {
@@ -36,5 +35,3 @@ input BookInput {
     title: String
     pages: Int
 }
-
-union Object = Book | BookList
