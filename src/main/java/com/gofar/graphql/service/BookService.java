@@ -2,6 +2,7 @@ package com.gofar.graphql.service;
 
 import com.gofar.graphql.exception.BookException;
 import com.gofar.graphql.model.Book;
+import com.gofar.graphql.repository.AuthorRepository;
 import com.gofar.graphql.repository.BookRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ import java.util.Optional;
 public class BookService {
 
     private BookRepository bookRepository;
+
+    private AuthorRepository authorRepository;
+
     private final static String BOOK_NOT_FOUND = "Book with id %s not found";
     private final static String BOOK_ALREADY_EXISTS = "Book with id %s does not exists";
 
@@ -52,6 +56,13 @@ public class BookService {
         throw new BookException(String.format(BOOK_NOT_FOUND, id), ErrorType.NOT_FOUND);
     }
 
+    public Book create(Book book) {
+        if (authorRepository.existsById(book.getAuthor().getId())) {
+            return bookRepository.save(book);
+        }
+        throw new BookException("The author of the book not found", ErrorType.BAD_REQUEST);
+    }
+
     public List<Book> search(String title, int pages, String authorName, String nationality) {
         Optional<Book> optional = bookRepository.findByTitle(title);
         List<Book> booksByPages = bookRepository.findByPages(pages);
@@ -62,4 +73,10 @@ public class BookService {
     public void setBookRepository(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
+
+    @Autowired
+    public void setAuthorRepository(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
+
 }

@@ -16,10 +16,6 @@ type Response {
     message: String
 }
 
-type BookList {
-    books: [Book]
-}
-
 type Query {
     books: [Book]
     getBookById(id: ID!): Book
@@ -29,9 +25,11 @@ type Query {
 type Mutation {
     updateBook(id: ID!, bookInput: BookInput): Book
     deleteBookById(id: ID!): Response
+    createBook(bookInput: BookInput): Book
 }
 
 input BookInput {
     title: String
     pages: Int
+    authorId: Int
 }

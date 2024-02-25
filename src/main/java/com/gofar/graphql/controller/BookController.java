@@ -45,6 +45,11 @@ public class BookController {
         return bookService.updateBook((long) id, bookInput.toBook());
     }
 
+    @MutationMapping(name = "createBook")
+    public Book createBook(@Argument BookInput bookInput) {
+        return bookService.create(bookInput.toBook());
+    }
+
     @MutationMapping(name = "deleteBookById")
     public Response delete(@Argument int id) {
         String message = bookService.deleteById((long)id);
