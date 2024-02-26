@@ -39,6 +39,14 @@ The api exposes data about books and authors.
 
 ![](screencasts/update-book-request.png)
 
+- Delete a book
+- Save a book
+- Get all authors
+- Get author by id
+- Search authors by using __name__, __nationality__ attributes (they're optional); it is a **or** search.
+- Update author
+- Delete author (books related to him / her are deleted)
+
 ## Documentation
 Here is the official documentation of spring for graphql -> [check it](https://spring.io/guides/gs/graphql-server)
 
