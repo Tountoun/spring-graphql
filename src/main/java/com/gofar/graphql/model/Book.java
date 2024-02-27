@@ -8,6 +8,8 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
+    private String isbn;
     private String title;
     private int pages;
     @ManyToOne
@@ -59,5 +61,24 @@ public class Book {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", isbn='" + isbn + '\'' +
+                ", title='" + title + '\'' +
+                ", pages=" + pages +
+                ", author=" + author +
+                '}';
     }
 }

@@ -1,4 +1,5 @@
 scalar Date
+scalar Long
 
 type Book {
     id: ID!
@@ -45,7 +46,8 @@ input AuthorInput {
 }
 
 input BookInput {
-    title: String
+    title: String!
     pages: Int
-    authorId: Int
+    authorId: Long
+    isbn: String!
 }

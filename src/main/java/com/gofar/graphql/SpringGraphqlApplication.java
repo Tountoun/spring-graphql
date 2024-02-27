@@ -22,8 +22,13 @@ public class SpringGraphqlApplication {
 	}
 
 	@Bean
-	public RuntimeWiringConfigurer wiringConfigurer() {
+	public RuntimeWiringConfigurer localDateGraphQL() {
 		return builder -> builder.scalar(ExtendedScalars.Date);
+	}
+
+	@Bean
+	public RuntimeWiringConfigurer longGraphQL() {
+		return builder -> builder.scalar(ExtendedScalars.GraphQLLong);
 	}
 
 	@Bean
