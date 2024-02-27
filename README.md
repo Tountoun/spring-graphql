@@ -43,7 +43,7 @@ The api exposes data about books and authors.
 - Save a book
 - Get all authors
 - Get author by id
-- Search authors by using __name__, __nationality__ attributes (they're optional); it is a **or** search.
+- Search authors by using __email__, __name__, __nationality__ attributes (they're optional); it is a **or** search.
 - Update author
 - Delete author (books related to him / her are deleted)
 

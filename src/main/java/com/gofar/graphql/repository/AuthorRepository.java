@@ -20,4 +20,6 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
     List<Author> findAllByNationality(String nationality);
 
     Optional<Author> findByName(String name);
+
+    boolean existsByEmail(String email);
 }

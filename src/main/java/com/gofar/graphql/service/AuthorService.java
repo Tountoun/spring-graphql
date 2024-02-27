@@ -31,6 +31,9 @@ public class AuthorService {
     }
 
     public Author save(Author author) {
+        if (authorRepository.existsByEmail(author.getEmail())) {
+            throw new AuthorException(String.format("Author with email %s already exists", author.getEmail()), ErrorType.BAD_REQUEST);
+        }
         return authorRepository.save(author);
     }
 
