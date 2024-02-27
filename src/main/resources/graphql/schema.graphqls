@@ -3,6 +3,7 @@ scalar Long
 
 type Book {
     id: ID!
+    isbn: String
     title: String
     pages: Int
     author: Author
