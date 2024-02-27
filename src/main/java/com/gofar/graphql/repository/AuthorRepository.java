@@ -13,7 +13,9 @@ import java.util.Optional;
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
     @Query(value = "select * from author a where a.id = :id", nativeQuery = true)
-    Author getById(@Param(value = "id") Long id);
+    Author getOneById(@Param(value = "id") Long id);
+
+    Optional<Author> findByEmail(String email);
 
     List<Author> findAllByNationality(String nationality);
 

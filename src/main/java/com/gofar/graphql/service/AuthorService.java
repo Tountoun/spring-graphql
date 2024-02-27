@@ -25,7 +25,7 @@ public class AuthorService {
 
     public Author getById(Long id) {
         if (authorRepository.existsById(id)) {
-            return authorRepository.getById(id);
+            return authorRepository.getOneById(id);
         }
         throw new AuthorException(String.format(AUTHOR_NOT_FOUND, id), ErrorType.NOT_FOUND);
     }
@@ -35,10 +35,10 @@ public class AuthorService {
     }
 
     public Author update(Long id, Author author) {
-        Author existing = authorRepository.getById(id);
+        Author existing = authorRepository.getOneById(id);
         String newName = author.getName();
         String newNationality = author.getNationality();
-        int newAge = author.getAge();
+        String newEmail = author.getEmail();
         if (Objects.nonNull(existing)) {
             if (StringUtils.isNotEmpty(newName) && !existing.getName().equals(newName)) {
                 existing.setName(newName);
@@ -46,18 +46,23 @@ public class AuthorService {
             if (StringUtils.isNotEmpty(newNationality) && !existing.getNationality().equals(newNationality)) {
                 existing.setNationality(newNationality);
             }
-            if (author.getAge() != 0 && existing.getAge() != newAge) {
-                existing.setAge(newAge);
+            if (StringUtils.isNotEmpty(newEmail) && !existing.getNationality().equals(newEmail)) {
+                existing.setNationality(newEmail);
+            }
+            if (Objects.nonNull(author.getBirthDay()) && existing.getBirthDay() != author.getBirthDay()) {
+                existing.setBirthDay(author.getBirthDay());
             }
             return authorRepository.saveAndFlush(existing);
         }
         throw new AuthorException(String.format(AUTHOR_NOT_FOUND, id), ErrorType.NOT_FOUND);
     }
 
-    public List<Author> search(String name, String nationality) {
-        Optional<Author> optional = authorRepository.findByName(name);
+    public List<Author> search(String email, String name, String nationality) {
+        Optional<Author> optionalByName = authorRepository.findByName(name);
+        Optional<Author> optionalByEmail = authorRepository.findByEmail(email);
         List<Author> authors = authorRepository.findAllByNationality(nationality);
-        optional.ifPresent(authors::add);
+        optionalByName.ifPresent(authors::add);
+        optionalByEmail.ifPresent(authors::add);
         return authors;
     }
 

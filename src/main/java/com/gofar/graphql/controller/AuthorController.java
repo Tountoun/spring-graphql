@@ -4,6 +4,7 @@ import com.gofar.graphql.model.Author;
 import com.gofar.graphql.model.AuthorInput;
 import com.gofar.graphql.model.Response;
 import com.gofar.graphql.service.AuthorService;
+import com.gofar.graphql.utils.UtilsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.Arguments;
@@ -31,17 +32,17 @@ public class AuthorController {
 
     @QueryMapping
     public List<Author> searchAuthor(@Arguments Map<String, String> argsMap) {
-        return authorService.search(argsMap.get("name"), argsMap.get("nationality"));
+        return authorService.search(argsMap.get("email"), argsMap.get("name"), argsMap.get("nationality"));
     }
 
     @MutationMapping
     public Author saveAuthor(@Argument AuthorInput authorInput) {
-        return authorService.save(authorInput.toAuthor());
+        return authorService.save(UtilsService.authorInputToAuthor(authorInput));
     }
 
     @MutationMapping
     public Author updateAuthor(@Argument Long id, @Argument AuthorInput authorInput) {
-        Author update = authorInput.toAuthor();
+        Author update = UtilsService.authorInputToAuthor(authorInput);
         return authorService.update(id, update);
     }
 

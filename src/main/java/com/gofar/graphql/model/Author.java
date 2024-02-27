@@ -2,6 +2,7 @@ package com.gofar.graphql.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,26 +12,27 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
+    private String email;
     private String name;
     private String nationality;
-    private int age;
-
+    private LocalDate birthDay;
     @OneToMany
     private Set<Book> books = new HashSet<>();
 
     public Author(){}
 
-    public Author(Long id, String name, String nationality, int age) {
+    public Author(Long id, String name, String nationality, String email) {
         this.id = id;
         this.name = name;
         this.nationality = nationality;
-        this.age = age;
+        this.email = email;
     }
 
-    public Author(String name, String nationality, int age) {
+    public Author(String name, String nationality, String email) {
         this.name = name;
         this.nationality = nationality;
-        this.age = age;
+        this.email = email;
     }
 
     public Long getId() {
@@ -57,12 +59,20 @@ public class Author {
         this.nationality = nationality;
     }
 
-    public int getAge() {
-        return age;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public LocalDate getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(LocalDate birthDay) {
+        this.birthDay = birthDay;
     }
 
     public void setBooks(Set<Book> books) {
@@ -75,5 +85,21 @@ public class Author {
 
     public void addBook(Book book) {
         this.books.add(book);
+    }
+
+    public void removeBook(Book book) {
+        this.books.remove(book);
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", nationality='" + nationality + '\'' +
+                ", birthDay=" + birthDay +
+                ", books=" + books +
+                '}';
     }
 }

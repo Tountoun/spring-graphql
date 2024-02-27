@@ -1,3 +1,5 @@
+scalar Date
+
 type Book {
     id: ID!
     title: String
@@ -7,9 +9,10 @@ type Book {
 
 type Author {
     id: ID!
+    email: String!
     name: String
     nationality: String
-    age: Int
+    birthDay: Date
 }
 
 type Response {
@@ -22,7 +25,7 @@ type Query {
     search(title: String = "", pages: Int = 0, authorName: String = "", authorNationality: String = ""): [Book]
     authors: [Author]
     getAuthorById(id: ID!): Author
-    searchAuthor(name: String = "", nationality: String = ""): [Author]
+    searchAuthor(email: String = "", name: String = "", nationality: String = ""): [Author]
 }
 
 type Mutation {
@@ -37,7 +40,8 @@ type Mutation {
 input AuthorInput {
     name: String
     nationality: String
-    age: Int
+    email: String
+    dateOfBirth: Date
 }
 
 input BookInput {
