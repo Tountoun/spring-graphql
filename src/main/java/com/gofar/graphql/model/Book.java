@@ -8,8 +8,9 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String isbn;
+    @Column(nullable = false)
     private String title;
     private int pages;
     @ManyToOne
@@ -25,8 +26,9 @@ public class Book {
         this.author = author;
     }
 
-    public Book(String title, int pages, Author author) {
+    public Book(String title, String isbn, int pages, Author author) {
         this.title = title;
+        this.isbn = isbn;
         this.pages = pages;
         this.author = author;
     }

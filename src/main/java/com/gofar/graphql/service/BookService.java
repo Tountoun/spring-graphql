@@ -36,9 +36,13 @@ public class BookService {
         Book existing = this.getBookById(id);
         String oldTitle = existing.getTitle();
         int oldPages = existing.getPages();
+        String oldIsbn = existing.getIsbn();
         if (Objects.nonNull(book)) {
             if (StringUtils.isNotEmpty(book.getTitle()) && !StringUtils.equals(book.getTitle(), oldTitle)) {
                 existing.setTitle(book.getTitle());
+            }
+            if (StringUtils.isNotEmpty(book.getIsbn()) && !StringUtils.equals(book.getIsbn(), oldIsbn)) {
+                existing.setIsbn(book.getIsbn());
             }
             if (book.getPages() != 0 && book.getPages() != oldPages) {
                 existing.setPages(book.getPages());
@@ -57,18 +61,27 @@ public class BookService {
     }
 
     public Book create(Book book) {
+        if (StringUtils.isEmpty(book.getIsbn()) || StringUtils.isEmpty(book.getTitle())) {
+            throw new BookException("Book isbn and title are required", ErrorType.BAD_REQUEST);
+        }
+        if (bookRepository.existsByIsbn(book.getIsbn())) {
+            throw new BookException("Book with isbn " + book.getIsbn() + " already exists.", ErrorType.BAD_REQUEST);
+        }
         if (authorRepository.existsById(book.getAuthor().getId())) {
             return bookRepository.save(book);
         }
         throw new BookException("The author of the book not found", ErrorType.BAD_REQUEST);
     }
 
-    public List<Book> search(String title, int pages, String authorName, String nationality) {
-        Optional<Book> optional = bookRepository.findByTitle(title);
+    public List<Book> search(String isbn, String title, int pages, String authorName, String nationality) {
+        Optional<Book> optionalByTitle = bookRepository.findByTitle(title);
         List<Book> booksByPages = bookRepository.findByPages(pages);
-        optional.ifPresent(booksByPages::add);
+        Optional<Book> optionalByIsbn = bookRepository.findByIsbn(isbn);
+        optionalByTitle.ifPresent(booksByPages::add);
+        optionalByIsbn.ifPresent(booksByPages::add);
         return booksByPages;
     }
+
     @Autowired
     public void setBookRepository(BookRepository bookRepository) {
         this.bookRepository = bookRepository;

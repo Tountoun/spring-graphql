@@ -16,8 +16,9 @@ public class UtilsService {
     public static Book bookInputToBook(BookInput bookInput) {
         Author author = new Author();
         Book book = new Book();
-        book.setTitle(book.getTitle());
+        book.setTitle(bookInput.getTitle());
         book.setPages(bookInput.getPages());
+        book.setIsbn(bookInput.getIsbn());
         author.setId(bookInput.getAuthorId());
         book.setAuthor(author);
         return book;

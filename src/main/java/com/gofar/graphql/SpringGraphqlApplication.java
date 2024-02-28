@@ -38,10 +38,10 @@ public class SpringGraphqlApplication {
 			Author yvan = new Author("Yvan", "Togolese", "yvan@gofar.com");
 			Author mike = new Author("Mike Orig", "British", "omike@gofar.com");
 			Author musk = new Author("Elon Musk", "American", "elmust@gofar.com");
-			Book book = new Book("Worship and Fate ", 354, yvan);
-			Book book2 = new Book("Title of book2 ", 210, mike);
-			Book book3 = new Book("Mars and Earth", 154, musk);
-			Book book4 = new Book("The road to Mars", 317, musk);
+			Book book = new Book("Worship and Fate", "0-7432-1145-7", 354, yvan);
+			Book book2 = new Book("Title of book2", "978-0-7432-1145-8", 210, mike);
+			Book book3 = new Book("Mars and Earth", "978-1-56389-694-7", 154, musk);
+			Book book4 = new Book("The road to Mars", "1-56389-694-3",317, musk);
 			authorRepository.saveAll(List.of(yvan, mike, musk));
 			bookRepository.saveAll(List.of(book, book2, book3, book4));
 		};
