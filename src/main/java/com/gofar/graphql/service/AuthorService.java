@@ -31,6 +31,9 @@ public class AuthorService {
     }
 
     public Author save(Author author) {
+        if (StringUtils.isEmpty(author.getEmail())) {
+            throw new AuthorException("Author's email is required", ErrorType.BAD_REQUEST);
+        }
         if (authorRepository.existsByEmail(author.getEmail())) {
             throw new AuthorException(String.format("Author with email %s already exists", author.getEmail()), ErrorType.BAD_REQUEST);
         }

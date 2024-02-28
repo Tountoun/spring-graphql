@@ -42,7 +42,7 @@ type Mutation {
 input AuthorInput {
     name: String
     nationality: String
-    email: String!
+    email: String
     dateOfBirth: Date
 }
 
