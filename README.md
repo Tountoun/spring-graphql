@@ -22,7 +22,7 @@ The api exposes data about books and authors.
     mvn spring-boot:run
 ````
 ## Features
-### Note: The schema of the response is specified by the client. This avoids over-fetching and under-fetching.
+###### Note: The schema of the response is specified by the client. This avoids over-fetching and under-fetching.
 - Get list of books
 
 ![](screencasts/books-request.png)
@@ -40,7 +40,13 @@ The api exposes data about books and authors.
 ![](screencasts/update-book-request.png)
 
 - Delete a book
+
+![](screencasts/delete-book-request.png)
+
 - Save a book
+
+![](screencasts/save-book-request.png)
+
 - Get all authors
 - Get author by id
 - Search authors by using __email__, __name__, __nationality__ attributes (they're optional); it is a **or** search.
@@ -48,7 +54,8 @@ The api exposes data about books and authors.
 - Delete author (books related to him / her are deleted)
 
 ## Documentation
-Here is the official documentation of spring for graphql -> [check it](https://spring.io/guides/gs/graphql-server)
+- Here is the official documentation of spring for graphql --> [check it](https://spring.io/guides/gs/graphql-server)
+- The documentation of graphql --> [graphql.org](https://graphql.org/)
 
 ## Contact
 - Feel free to join me at [tountounabela@gmail.com](mailto://tountounabela@gmail.com)
