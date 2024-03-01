@@ -36,6 +36,12 @@ public class AuthorController {
     }
 
     @QueryMapping
+    public Author getAuthorByEmail(@Argument String email) {
+        logger.debug(String.format("Get author by email value %s", email));
+        return authorService.getByEmail(email);
+    }
+
+    @QueryMapping
     public List<Author> searchAuthor(@Arguments Map<String, String> argsMap) {
         logger.debug(String.format("Search authors with properties %s", argsMap));
         return authorService.search(argsMap.get("email"), argsMap.get("name"), argsMap.get("nationality"));

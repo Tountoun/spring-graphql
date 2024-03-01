@@ -44,6 +44,12 @@ public class BookController {
         return bookService.getBookById(id.value());
     }
 
+    @QueryMapping
+    public Book getBookByIsbn(@Argument String isbn ) {
+        logger.debug("Get book by isbn value " + isbn);
+        return bookService.getBookByIsbn(isbn);
+    }
+
     @QueryMapping(name = "search")
     public List<Book> searchBook(@Arguments Map<String, String> keyValues) {
         logger.debug("Search books with using data " + keyValues);

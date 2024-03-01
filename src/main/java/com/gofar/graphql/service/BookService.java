@@ -35,6 +35,14 @@ public class BookService {
         return book.orElseThrow(() -> new BookException(String.format(BOOK_NOT_FOUND, id), ErrorType.NOT_FOUND));
     }
 
+    public Book getBookByIsbn(String isbn) {
+        Optional<Book> optionalBook = bookRepository.findByIsbn(isbn);
+        return optionalBook.orElseGet(()-> {
+            logger.error("Book with isbn " + isbn + " not found");
+            throw new BookException("Book with isbn " + isbn + " not found", ErrorType.NOT_FOUND);
+        });
+    }
+
     public Book updateBook(Long id, Book book) {
         Book existing = this.getBookById(id);
         String oldTitle = existing.getTitle();

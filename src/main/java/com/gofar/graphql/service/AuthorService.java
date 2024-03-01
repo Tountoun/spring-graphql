@@ -35,6 +35,14 @@ public class AuthorService {
         throw new AuthorException(String.format(AUTHOR_NOT_FOUND, id), ErrorType.NOT_FOUND);
     }
 
+    public Author getByEmail(String email) {
+        Optional<Author> optionalAuthor = authorRepository.findByEmail(email);
+        return optionalAuthor.orElseGet(()-> {
+            logger.error(String.format("Author with email %s not found.", email));
+            throw new AuthorException(String.format("Author with email %s not found.", email), ErrorType.NOT_FOUND);
+        });
+    }
+
     public Author save(Author author) {
         if (StringUtils.isEmpty(author.getEmail())) {
             logger.error("Validation error: Email of author is required");
