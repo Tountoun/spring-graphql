@@ -1,7 +1,7 @@
 package com.gofar.graphql.service;
 
 import com.gofar.graphql.exception.BookException;
-import com.gofar.graphql.model.Book;
+import com.gofar.graphql.entity.Book;
 import com.gofar.graphql.repository.AuthorRepository;
 import com.gofar.graphql.repository.BookRepository;
 import org.apache.commons.lang3.StringUtils;

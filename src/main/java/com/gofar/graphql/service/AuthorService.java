@@ -1,7 +1,7 @@
 package com.gofar.graphql.service;
 
 import com.gofar.graphql.exception.AuthorException;
-import com.gofar.graphql.model.Author;
+import com.gofar.graphql.entity.Author;
 import com.gofar.graphql.model.Response;
 import com.gofar.graphql.repository.AuthorRepository;
 import org.apache.commons.lang3.StringUtils;

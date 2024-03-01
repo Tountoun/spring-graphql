@@ -1,4 +1,4 @@
-package com.gofar.graphql.model;
+package com.gofar.graphql.entity;
 
 import jakarta.persistence.*;
 

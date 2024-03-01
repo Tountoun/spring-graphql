@@ -1,6 +1,6 @@
 package com.gofar.graphql.repository;
 
-import com.gofar.graphql.model.Author;
+import com.gofar.graphql.entity.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

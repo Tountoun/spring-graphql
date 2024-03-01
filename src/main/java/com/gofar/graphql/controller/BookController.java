@@ -1,7 +1,7 @@
 package com.gofar.graphql.controller;
 
 import com.gofar.graphql.exception.BookException;
-import com.gofar.graphql.model.Book;
+import com.gofar.graphql.entity.Book;
 import com.gofar.graphql.model.BookInput;
 import com.gofar.graphql.model.Response;
 import com.gofar.graphql.service.BookService;

@@ -1,7 +1,7 @@
 package com.gofar.graphql;
 
-import com.gofar.graphql.model.Author;
-import com.gofar.graphql.model.Book;
+import com.gofar.graphql.entity.Author;
+import com.gofar.graphql.entity.Book;
 import com.gofar.graphql.repository.AuthorRepository;
 import com.gofar.graphql.repository.BookRepository;
 import graphql.scalars.ExtendedScalars;

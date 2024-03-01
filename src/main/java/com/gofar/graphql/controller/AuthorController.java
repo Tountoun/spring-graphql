@@ -1,6 +1,6 @@
 package com.gofar.graphql.controller;
 
-import com.gofar.graphql.model.Author;
+import com.gofar.graphql.entity.Author;
 import com.gofar.graphql.model.AuthorInput;
 import com.gofar.graphql.model.Response;
 import com.gofar.graphql.service.AuthorService;

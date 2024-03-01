@@ -1,6 +1,6 @@
 package com.gofar.graphql.repository;
 
-import com.gofar.graphql.model.Book;
+import com.gofar.graphql.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

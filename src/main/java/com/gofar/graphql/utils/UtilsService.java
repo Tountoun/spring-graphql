@@ -1,8 +1,8 @@
 package com.gofar.graphql.utils;
 
-import com.gofar.graphql.model.Author;
+import com.gofar.graphql.entity.Author;
 import com.gofar.graphql.model.AuthorInput;
-import com.gofar.graphql.model.Book;
+import com.gofar.graphql.entity.Book;
 import com.gofar.graphql.model.BookInput;
 
 public class UtilsService {
