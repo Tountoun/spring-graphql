@@ -5,6 +5,8 @@ import com.gofar.graphql.model.Book;
 import com.gofar.graphql.repository.AuthorRepository;
 import com.gofar.graphql.repository.BookRepository;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.execution.ErrorType;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.Optional;
 @Service
 public class BookService {
 
+    private final Logger logger = LoggerFactory.getLogger(BookService.class);
     private BookRepository bookRepository;
 
     private AuthorRepository authorRepository;
@@ -49,27 +52,33 @@ public class BookService {
             }
             return bookRepository.saveAndFlush(existing);
         }
+        logger.error(String.format(BOOK_ALREADY_EXISTS, id));
         throw new BookException(String.format(BOOK_ALREADY_EXISTS, id), ErrorType.BAD_REQUEST);
     }
 
     public String deleteById(long id) {
         if (bookRepository.existsById(id)) {
             bookRepository.deleteById(id);
+            logger.info("Book with id "+ id + " deleted successfully");
             return String.format("Book with id %s deleted successfully", id);
         }
+        logger.error(String.format(BOOK_NOT_FOUND, id));
         throw new BookException(String.format(BOOK_NOT_FOUND, id), ErrorType.NOT_FOUND);
     }
 
     public Book create(Book book) {
         if (StringUtils.isEmpty(book.getIsbn()) || StringUtils.isEmpty(book.getTitle())) {
+            logger.error("Isbn or title of the book is missing");
             throw new BookException("Book isbn and title are required", ErrorType.BAD_REQUEST);
         }
         if (bookRepository.existsByIsbn(book.getIsbn())) {
+            logger.error("Book with isbn " + book.getIsbn() + " already exists.");
             throw new BookException("Book with isbn " + book.getIsbn() + " already exists.", ErrorType.BAD_REQUEST);
         }
         if (authorRepository.existsById(book.getAuthor().getId())) {
             return bookRepository.save(book);
         }
+        logger.error("The author of the book does not exists");
         throw new BookException("The author of the book not found", ErrorType.BAD_REQUEST);
     }
 
