@@ -5,6 +5,8 @@ import com.gofar.graphql.model.Author;
 import com.gofar.graphql.model.Response;
 import com.gofar.graphql.repository.AuthorRepository;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.execution.ErrorType;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import java.util.Optional;
 
 @Service
 public class AuthorService {
+
+    private final Logger logger = LoggerFactory.getLogger(AuthorService.class);
 
     private final static String AUTHOR_NOT_FOUND = "Author with id %s not found";
     public AuthorRepository authorRepository;
@@ -27,14 +31,17 @@ public class AuthorService {
         if (authorRepository.existsById(id)) {
             return authorRepository.getOneById(id);
         }
+        logger.error(String.format(AUTHOR_NOT_FOUND, id));
         throw new AuthorException(String.format(AUTHOR_NOT_FOUND, id), ErrorType.NOT_FOUND);
     }
 
     public Author save(Author author) {
         if (StringUtils.isEmpty(author.getEmail())) {
+            logger.error("Validation error: Email of author is required");
             throw new AuthorException("Author's email is required", ErrorType.BAD_REQUEST);
         }
         if (authorRepository.existsByEmail(author.getEmail())) {
+            logger.error(String.format("Author with email %s already exists", author.getEmail()));
             throw new AuthorException(String.format("Author with email %s already exists", author.getEmail()), ErrorType.BAD_REQUEST);
         }
         return authorRepository.save(author);
@@ -60,6 +67,7 @@ public class AuthorService {
             }
             return authorRepository.saveAndFlush(existing);
         }
+        logger.error(String.format(AUTHOR_NOT_FOUND, id));
         throw new AuthorException(String.format(AUTHOR_NOT_FOUND, id), ErrorType.NOT_FOUND);
     }
 
@@ -75,8 +83,10 @@ public class AuthorService {
     public Response deleteById(Long id) {
         if (authorRepository.existsById(id)) {
             authorRepository.deleteById(id);
+            logger.info(String.format("Author with id %s deleted", id));
             return new Response(String.format("Author with id %s deleted successfully", id));
         }
+        logger.error(String.format(AUTHOR_NOT_FOUND, id));
         throw new AuthorException(String.format(AUTHOR_NOT_FOUND, id), ErrorType.NOT_FOUND);
     }
 
