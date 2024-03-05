@@ -1,3 +1,4 @@
 2024-03-02 23:55:30,239 INFO org.springframework.boot.StartupInfoLogger [main] Starting SpringGraphqlApplication using Java 17.0.10 with PID 4044 (C:\Users\tount\IdeaProjects\spring-graphql\target\classes started by tount in C:\Users\tount\IdeaProjects\spring-graphql)
 2024-03-02 23:55:30,319 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v3.2.2, Spring v6.1.3
 2024-03-02 23:55:30,321 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2024-03-02 23:56:00,659 INFO org.springframework.boot.StartupInfoLogger [main] Started SpringGraphqlApplication in 35.268 seconds (process running for 39.08)
