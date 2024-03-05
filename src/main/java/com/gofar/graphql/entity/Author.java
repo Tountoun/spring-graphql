@@ -84,6 +84,7 @@ public class Author {
     }
 
     public void addBook(Book book) {
+        book.setAuthor(this);
         this.books.add(book);
     }
 
